@@ -703,9 +703,9 @@ h1 em {
 // ═══════════════════════════════════
 // CONFIGURATION AIRTABLE
 // ═══════════════════════════════════
-const AIRTABLE_BASE_ID = 'appcqKjVsOJNt0qdv';
-const AIRTABLE_TABLE_ID = 'tbl3tN42g8ohwEsPH';
-const AIRTABLE_API_KEY = 'VOTRE_CLE_API_AIRTABLE'; // À remplacer
+
+
+const WEBHOOK_URL = 'https://n8n.srv781285.hstgr.cloud/webhook/quiz-resilience';
 
 // ═══════════════════════════════════
 // QUESTIONS
@@ -967,27 +967,21 @@ async function sendToAirtable() {
   const resilience = pct !== null ? Math.round(100 - pct) : null;
 
   try {
-    const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}`, {
+    const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        fields: {
-          'Métier': metier,
-          'Email': email,
-          'Score Résilience': resilience,
-          'Usage IA': 'Via quiz viral',
-          'Statut': 'Nouveau'
-        }
+        metier: metier,
+        email: email,
+        score_resilience: resilience,
+        score_remplacabilite: pct
       })
     });
 
     if (response.ok) {
       showScreen('confirmation');
     } else {
-      throw new Error('Erreur Airtable');
+      throw new Error('Erreur webhook');
     }
   } catch (e) {
     btn.disabled = false;
