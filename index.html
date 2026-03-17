@@ -673,13 +673,31 @@ h1 em {
       Tâche par tâche, horizon temporel, et plan d'action personnalisé en 3 axes.
       Gratuit, par email.
     </p>
-    <div class="cta-form">
+        <div class="cta-form">
       <input class="cta-input" type="text" id="inputMetier" placeholder="Votre métier exact (ex : Comptable)">
+      <select class="cta-input" id="inputSecteur">
+        <option value="" disabled selected>Votre secteur d'activité</option>
+        <option>Finance</option><option>Tech</option><option>Santé</option>
+        <option>Marketing</option><option>Juridique</option><option>RH</option>
+        <option>Logistique</option><option>BTP</option><option>Commerce</option>
+        <option>Administration</option><option>Industrie</option>
+        <option>Éducation</option><option>Immobilier</option>
+        <option>Banque / Assurance</option><option>Communication</option>
+        <option>Autre</option>
+      </select>
+      <select class="cta-input" id="inputExperience">
+        <option value="" disabled selected>Années d'expérience dans ce métier</option>
+        <option>Moins de 2 ans</option>
+        <option>2 à 5 ans</option>
+        <option>5 à 10 ans</option>
+        <option>Plus de 10 ans</option>
+      </select>
       <input class="cta-input" type="email" id="inputEmail" placeholder="Votre email professionnel">
       <button class="btn-rapport" id="btnRapport" onclick="sendToAirtable()">
         Recevoir mon rapport détaillé →
       </button>
       <div class="cta-note">Rapport envoyé en moins de 2 minutes · Aucun spam</div>
+    </div>
     </div>
   </div>
 
@@ -840,7 +858,12 @@ function selectOption(idx, score) {
 
   setTimeout(() => {
     totalScore += score;
-    answers.push(idx);
+    // Stocker question + réponse choisie (libellé complet)
+    answers.push({
+      question: QUESTIONS[currentQ].q,
+      reponse: QUESTIONS[currentQ].options[idx].text,
+      idx: idx
+    });
     currentQ++;
 
     if (currentQ < QUESTIONS.length) {
@@ -947,10 +970,12 @@ function copyLink() {
 // ═══════════════════════════════════
 async function sendToAirtable() {
   const metier = document.getElementById('inputMetier').value.trim();
+  const secteur = document.getElementById('inputSecteur').value;
+  const experience = document.getElementById('inputExperience').value;
   const email = document.getElementById('inputEmail').value.trim();
 
-  if (!metier || !email) {
-    alert('Merci de renseigner votre métier et votre email.');
+  if (!metier || !secteur || !experience || !email) {
+    alert('Merci de renseigner tous les champs pour recevoir votre rapport.');
     return;
   }
 
@@ -966,15 +991,23 @@ async function sendToAirtable() {
   const pct = window._quizResult ? window._quizResult.pct : null;
   const resilience = pct !== null ? Math.round(100 - pct) : null;
 
+  // Construire le résumé des réponses quiz
+  const reponsesQuiz = answers.map((a, i) =>
+    `Q${i+1}. ${a.question}\n   → ${a.reponse}`
+  ).join('\n\n');
+
   try {
     const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         metier: metier,
+        secteur: secteur,
+        experience: experience,
         email: email,
         score_resilience: resilience,
-        score_remplacabilite: pct
+        score_remplacabilite: pct,
+        reponses_quiz: reponsesQuiz
       })
     });
 
