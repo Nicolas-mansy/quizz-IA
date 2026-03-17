@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Votre poste est-il remplaçable par l'IA ?">
+<meta property="og:description" content="Découvrez votre score de remplaçabilité en 2 minutes. Basé sur l'étude Anthropic 2026 & O*NET.">
+<meta property="og:type" content="website">
+<title>Mon poste face à l'IA — Test de résilience</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rouge: #E8220A;
+  --noir: #0A0A0A;
+  --gris-fonce: #111111;
+  --gris-moyen: #1C1C1C;
+  --gris-clair: #2A2A2A;
+  --texte: #F0EDE8;
+  --texte-dim: #888880;
+  --vert: #2ECC71;
+  --orange: #F39C12;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--noir);
+  color: var(--texte);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ═══ LANDING ═══ */
+#landing {
+  justify-content: space-between;
+  padding: 0;
+}
+
+.landing-top {
+  padding: 32px 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--texte-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.source-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--texte-dim);
+  border: 1px solid #2A2A2A;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.landing-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 40px;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.landing-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--rouge);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.landing-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--rouge);
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--texte);
+  margin-bottom: 28px;
+  letter-spacing: -1px;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--rouge);
+}
+
+.landing-sub {
+  font-size: 16px;
+  color: var(--texte-dim);
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 48px;
+}
+
+.btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--rouge);
+  color: #fff;
+  border: none;
+  padding: 18px 36px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  width: fit-content;
+}
+
+.btn-start:hover {
+  background: #CC1A08;
+  transform: translateY(-1px);
+}
+
+.btn-start .arrow {
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+.btn-start:hover .arrow { transform: translateX(4px); }
+
+.landing-stats {
+  display: flex;
+  gap: 40px;
+  padding: 32px 40px;
+  border-top: 1px solid #1C1C1C;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.stat-item { display: flex; flex-direction: column; gap: 4px; }
+.stat-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--texte);
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--texte-dim);
+  line-height: 1.4;
+}
+
+/* ═══ QUIZ ═══ */
+#quiz {
+  flex-direction: column;
+  padding: 32px 40px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.quiz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.quiz-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--texte-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar {
+  width: 120px;
+  height: 2px;
+  background: #222;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--rouge);
+  border-radius: 1px;
+  transition: width 0.4s ease;
+}
+
+.progress-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--texte-dim);
+}
+
+.question-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--rouge);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.question-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+.question-hint {
+  font-size: 13px;
+  color: var(--texte-dim);
+  margin-bottom: 48px;
+  font-style: italic;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border: 1px solid #222;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--gris-fonce);
+}
+
+.option:hover {
+  border-color: var(--rouge);
+  background: #160800;
+  transform: translateX(4px);
+}
+
+.option.selected {
+  border-color: var(--rouge);
+  background: #160800;
+}
+
+.option-letter {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--texte-dim);
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.option-text {
+  font-size: 15px;
+  color: var(--texte);
+  line-height: 1.4;
+}
+
+/* ═══ RESULTAT ═══ */
+#resultat {
+  flex-direction: column;
+  padding: 40px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+
+.result-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--texte-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.score-circle {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 32px;
+}
+
+.score-circle svg {
+  transform: rotate(-90deg);
+  width: 200px;
+  height: 200px;
+}
+
+.score-circle circle {
+  fill: none;
+  stroke-width: 6;
+}
+
+.circle-bg { stroke: #1C1C1C; }
+
+.circle-fill {
+  stroke-dasharray: 565;
+  stroke-dashoffset: 565;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  stroke-linecap: round;
+}
+
+.score-number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 52px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.score-unit {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--texte-dim);
+  margin-top: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.score-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.score-desc {
+  font-size: 14px;
+  color: var(--texte-dim);
+  line-height: 1.7;
+  max-width: 440px;
+  margin-bottom: 16px;
+}
+
+.horizon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #2A2A2A;
+  padding: 10px 20px;
+  border-radius: 2px;
+  margin-bottom: 40px;
+}
+
+.horizon-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--texte-dim);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.horizon-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Share */
+.share-section {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 32px;
+}
+
+.share-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--texte-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.share-btn:hover { transform: translateY(-1px); opacity: 0.9; }
+
+.btn-linkedin { background: #0077B5; color: #fff; }
+.btn-x { background: #111; color: #fff; border: 1px solid #333; }
+.btn-whatsapp { background: #25D366; color: #fff; }
+.btn-copy { background: #222; color: var(--texte); border: 1px solid #333; }
+
+/* CTA rapport */
+.cta-rapport {
+  width: 100%;
+  max-width: 480px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 4px;
+  padding: 28px;
+  text-align: left;
+}
+
+.cta-rapport-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.cta-rapport-sub {
+  font-size: 13px;
+  color: var(--texte-dim);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.cta-form { display: flex; flex-direction: column; gap: 10px; }
+
+.cta-input {
+  background: #0A0A0A;
+  border: 1px solid #2A2A2A;
+  border-radius: 2px;
+  padding: 12px 16px;
+  color: var(--texte);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.cta-input:focus { border-color: var(--rouge); }
+.cta-input::placeholder { color: #444; }
+
+.btn-rapport {
+  background: var(--rouge);
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s;
+  text-align: center;
+}
+.btn-rapport:hover { background: #CC1A08; }
+.btn-rapport:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cta-note {
+  font-size: 11px;
+  color: #444;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Source */
+.source-footer {
+  margin-top: 32px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #333;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* Confirmation */
+#confirmation {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.confirm-icon {
+  font-size: 48px;
+  margin-bottom: 24px;
+}
+
+.confirm-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.confirm-sub {
+  font-size: 15px;
+  color: var(--texte-dim);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up { animation: fadeUp 0.5s ease forwards; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.question-number, .question-text, .question-hint { animation: slideIn 0.35s ease forwards; }
+.option { animation: fadeUp 0.3s ease forwards; opacity: 0; }
+.option:nth-child(1) { animation-delay: 0.05s; }
+.option:nth-child(2) { animation-delay: 0.1s; }
+.option:nth-child(3) { animation-delay: 0.15s; }
+.option:nth-child(4) { animation-delay: 0.2s; }
+
+/* Mobile */
+@media (max-width: 600px) {
+  .landing-hero { padding: 40px 24px; }
+  .landing-stats { padding: 24px; gap: 24px; flex-wrap: wrap; }
+  .landing-top { padding: 20px 24px 0; }
+  #quiz { padding: 24px; }
+  #resultat { padding: 32px 24px; }
+  .share-buttons { flex-direction: column; align-items: stretch; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LANDING ══════════ -->
+<div id="landing" class="screen active">
+  <div class="landing-top">
+    <span class="logo-tag">Résilience IA</span>
+    <span class="source-tag">Basé sur l'étude Anthropic · Mars 2026</span>
+  </div>
+
+  <div class="landing-hero">
+    <div class="landing-label">Test de résilience professionnelle</div>
+    <h1>Votre poste est-il <em>remplaçable</em> par l'IA ?</h1>
+    <p class="landing-sub">
+      7 questions sur vos tâches quotidiennes. Résultat immédiat.
+      Basé sur 200 000 conversations analysées et l'étude Anthropic sur l'impact de l'IA sur le marché du travail.
+    </p>
+    <button class="btn-start" onclick="startQuiz()">
+      Faire le test <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <div class="landing-stats">
+    <div class="stat-item">
+      <span class="stat-num">90%</span>
+      <span class="stat-label">des tâches de bureau<br>théoriquement couvertes</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">2026</span>
+      <span class="stat-label">Étude Anthropic<br>publiée en mars</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">2 min</span>
+      <span class="stat-label">pour connaître<br>votre score</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ QUIZ ══════════ -->
+<div id="quiz" class="screen">
+  <div class="quiz-nav">
+    <span class="quiz-logo">Résilience IA</span>
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-count" id="progressCount">1 / 7</span>
+    </div>
+  </div>
+
+  <div id="questionArea"></div>
+</div>
+
+<!-- ══════════ RESULTAT ══════════ -->
+<div id="resultat" class="screen">
+  <div class="result-label">Votre résultat</div>
+
+  <div class="score-circle">
+    <svg viewBox="0 0 200 200">
+      <circle class="circle-bg" cx="100" cy="100" r="90"/>
+      <circle class="circle-fill" id="circleFill" cx="100" cy="100" r="90"/>
+    </svg>
+    <div class="score-number">
+      <span class="score-pct" id="scoreDisplay">0</span>
+      <span class="score-unit">remplaçabilité</span>
+    </div>
+  </div>
+
+  <h2 class="score-title" id="scoreTitle"></h2>
+  <p class="score-desc" id="scoreDesc"></p>
+
+  <div class="horizon-badge">
+    <span class="horizon-label">Horizon estimé</span>
+    <span class="horizon-value" id="horizonValue"></span>
+  </div>
+
+  <div class="share-section">
+    <div class="share-title">Partager mon résultat</div>
+    <div class="share-buttons">
+      <button class="share-btn btn-linkedin" onclick="shareLinkedIn()">LinkedIn</button>
+      <button class="share-btn btn-x" onclick="shareX()">X / Twitter</button>
+      <button class="share-btn btn-whatsapp" onclick="shareWhatsApp()">WhatsApp</button>
+      <button class="share-btn btn-copy" onclick="copyLink()">Copier le lien</button>
+    </div>
+  </div>
+
+  <div class="cta-rapport">
+    <div class="cta-rapport-title">Recevoir l'analyse complète</div>
+    <p class="cta-rapport-sub">
+      Tâche par tâche, horizon temporel, et plan d'action personnalisé en 3 axes.
+      Gratuit, par email.
+    </p>
+    <div class="cta-form">
+      <input class="cta-input" type="text" id="inputMetier" placeholder="Votre métier exact (ex : Comptable)">
+      <input class="cta-input" type="email" id="inputEmail" placeholder="Votre email professionnel">
+      <button class="btn-rapport" id="btnRapport" onclick="sendToAirtable()">
+        Recevoir mon rapport détaillé →
+      </button>
+      <div class="cta-note">Rapport envoyé en moins de 2 minutes · Aucun spam</div>
+    </div>
+  </div>
+
+  <div class="source-footer">
+    Sources : Anthropic "Labor Market Impacts of AI" (Mars 2026) · O*NET Database · Eloundou et al. (2023)<br>
+    Ce test donne une indication générale. Ce n'est pas un diagnostic individuel.
+  </div>
+</div>
+
+<!-- ══════════ CONFIRMATION ══════════ -->
+<div id="confirmation" class="screen">
+  <div class="confirm-icon">✉️</div>
+  <div class="confirm-title">Rapport en route !</div>
+  <p class="confirm-sub">
+    Votre analyse personnalisée arrive dans votre boîte mail dans moins de 2 minutes.<br><br>
+    Pensez à vérifier vos spams si vous ne le voyez pas.
+  </p>
+</div>
+
+<script>
+// ═══════════════════════════════════
+// CONFIGURATION AIRTABLE
+// ═══════════════════════════════════
+const AIRTABLE_BASE_ID = 'appcqKjVsOJNt0qdv';
+const AIRTABLE_TABLE_ID = 'tbl3tN42g8ohwEsPH';
+const AIRTABLE_API_KEY = 'VOTRE_CLE_API_AIRTABLE'; // À remplacer
+
+// ═══════════════════════════════════
+// QUESTIONS
+// ═══════════════════════════════════
+const QUESTIONS = [
+  {
+    q: "Traitez-vous de l'information au quotidien ?",
+    hint: "Veille, recherches, lecture de documents, collecte de données…",
+    options: [
+      { text: "Jamais ou presque", score: 0 },
+      { text: "Parfois", score: 8 },
+      { text: "Souvent", score: 16 },
+      { text: "C'est le cœur de mon travail", score: 24 }
+    ]
+  },
+  {
+    q: "Rédigez-vous des contenus écrits ?",
+    hint: "Emails, rapports, articles, présentations, documentation…",
+    options: [
+      { text: "Jamais ou presque", score: 0 },
+      { text: "Parfois", score: 7 },
+      { text: "Souvent", score: 14 },
+      { text: "C'est le cœur de mon travail", score: 20 }
+    ]
+  },
+  {
+    q: "Vos tâches suivent-elles des processus répétitifs ?",
+    hint: "Processus standardisés, réponses types, workflows récurrents…",
+    options: [
+      { text: "Chaque jour est différent", score: 0 },
+      { text: "Part de routine", score: 8 },
+      { text: "Beaucoup de répétition", score: 16 },
+      { text: "Entièrement procédural", score: 22 }
+    ]
+  },
+  {
+    q: "Travaillez-vous principalement sur écran ?",
+    hint: "Logiciels métiers, tableurs, bases de données, code…",
+    options: [
+      { text: "Rarement", score: 0 },
+      { text: "Une partie de mon temps", score: 6 },
+      { text: "La majorité", score: 12 },
+      { text: "Quasi exclusivement", score: 18 }
+    ]
+  },
+  {
+    q: "Prenez-vous des décisions sur la base de chiffres ?",
+    hint: "Tableaux de bord, stats, analyses, KPI, reporting…",
+    options: [
+      { text: "Jamais ou presque", score: 0 },
+      { text: "Parfois", score: 5 },
+      { text: "Souvent", score: 10 },
+      { text: "C'est le cœur de mon travail", score: 14 }
+    ]
+  },
+  {
+    q: "Votre travail implique-t-il une présence physique ?",
+    hint: "Contact humain direct, soins, artisanat, terrain, déplacements…",
+    options: [
+      { text: "Tout est sur écran", score: 16 },
+      { text: "Rarement sur le terrain", score: 10 },
+      { text: "Régulièrement en présentiel", score: 4 },
+      { text: "L'essentiel de mon travail", score: 0 }
+    ]
+  },
+  {
+    q: "Gérez-vous des relations humaines complexes ?",
+    hint: "Négociation, médiation, accompagnement, conseil, management…",
+    options: [
+      { text: "Jamais ou presque", score: 12 },
+      { text: "Parfois", score: 8 },
+      { text: "Souvent", score: 4 },
+      { text: "C'est le cœur de mon travail", score: 0 }
+    ]
+  }
+];
+
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let currentQ = 0;
+let totalScore = 0;
+let answers = [];
+const MAX_SCORE = 126; // sum of all max option scores
+
+// ═══════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startQuiz() {
+  currentQ = 0;
+  totalScore = 0;
+  answers = [];
+  showScreen('quiz');
+  renderQuestion();
+}
+
+// ═══════════════════════════════════
+// RENDER QUESTION
+// ═══════════════════════════════════
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const pct = Math.round((currentQ / QUESTIONS.length) * 100);
+
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressCount').textContent = (currentQ + 1) + ' / ' + QUESTIONS.length;
+
+  const area = document.getElementById('questionArea');
+  area.innerHTML = `
+    <div class="question-number">Question ${currentQ + 1} sur ${QUESTIONS.length}</div>
+    <div class="question-text">${q.q}</div>
+    <div class="question-hint">${q.hint}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="selectOption(${i}, ${opt.score})" data-idx="${i}">
+          <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+          <span class="option-text">${opt.text}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function selectOption(idx, score) {
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.querySelector(`.option[data-idx="${idx}"]`).classList.add('selected');
+
+  setTimeout(() => {
+    totalScore += score;
+    answers.push(idx);
+    currentQ++;
+
+    if (currentQ < QUESTIONS.length) {
+      renderQuestion();
+    } else {
+      showResults();
+    }
+  }, 320);
+}
+
+// ═══════════════════════════════════
+// RESULTS
+// ═══════════════════════════════════
+function showResults() {
+  const pct = Math.round((totalScore / MAX_SCORE) * 100);
+  showScreen('resultat');
+
+  // Animate score
+  const scoreEl = document.getElementById('scoreDisplay');
+  let current = 0;
+  const interval = setInterval(() => {
+    current = Math.min(current + 2, pct);
+    scoreEl.textContent = current + '%';
+    if (current >= pct) clearInterval(interval);
+  }, 20);
+
+  // Animate circle
+  const circle = document.getElementById('circleFill');
+  const circumference = 565;
+  const offset = circumference - (pct / 100) * circumference;
+
+  let color, title, desc, horizon;
+
+  if (pct <= 30) {
+    color = '#2ECC71';
+    title = 'Exposition très faible';
+    desc = 'Votre métier repose sur des compétences physiques, relationnelles ou créatives que l\'IA maîtrise encore mal. Votre position est solide à moyen terme — mais restez vigilant sur les tâches administratives connexes.';
+    horizon = 'Pas d\'horizon prévisible';
+  } else if (pct <= 50) {
+    color = '#F39C12';
+    title = 'Exposition modérée';
+    desc = 'Une partie significative de vos tâches est dans le viseur de l\'IA. Pas de panique — mais un repositionnement stratégique sur vos compétences irremplaçables s\'impose dans les 2 à 5 prochaines années.';
+    horizon = 'Transition dans 2 à 5 ans';
+  } else if (pct <= 70) {
+    color = '#E67E22';
+    title = 'Exposition élevée';
+    desc = 'Plus de la moitié de vos tâches sont automatisables à court terme. Les études Anthropic (2026) montrent que des profils similaires au vôtre sont parmi les premiers impactés. Il est temps d\'agir.';
+    horizon = 'Impact dans les 2 prochaines années';
+  } else {
+    color = '#E8220A';
+    title = 'Exposition critique';
+    desc = 'Votre poste concentre exactement les tâches que l\'IA automatise en priorité — traitement d\'information, rédaction, processus répétitifs sur écran. Une reconversion ou un repositionnement est urgent.';
+    horizon = 'Impact immédiat en cours';
+  }
+
+  circle.style.stroke = color;
+  setTimeout(() => {
+    circle.style.strokeDashoffset = offset;
+  }, 100);
+
+  document.getElementById('scoreDisplay').style.color = color;
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreDesc').textContent = desc;
+  document.getElementById('horizonValue').textContent = horizon;
+  document.getElementById('horizonValue').style.color = color;
+
+  // Store for sharing
+  window._quizResult = { pct, title, color };
+}
+
+// ═══════════════════════════════════
+// SHARE
+// ═══════════════════════════════════
+function getShareText() {
+  const r = window._quizResult;
+  return `Je viens de faire le test de résilience IA — mon poste est remplaçable à ${r.pct}% selon l'étude Anthropic 2026. Et toi ? 👇\n\n${window.location.href}`;
+}
+
+function shareLinkedIn() {
+  const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(getShareText())}`;
+  window.open(url, '_blank');
+}
+
+function shareX() {
+  const r = window._quizResult;
+  const text = `Mon poste est remplaçable à ${r.pct}% par l'IA (étude Anthropic 2026). Et le vôtre ? 👇`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+}
+
+function shareWhatsApp() {
+  window.open(`https://wa.me/?text=${encodeURIComponent(getShareText())}`, '_blank');
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = 'Lien copié !';
+    setTimeout(() => btn.textContent = 'Copier le lien', 2000);
+  });
+}
+
+// ═══════════════════════════════════
+// SUBMIT TO AIRTABLE
+// ═══════════════════════════════════
+async function sendToAirtable() {
+  const metier = document.getElementById('inputMetier').value.trim();
+  const email = document.getElementById('inputEmail').value.trim();
+
+  if (!metier || !email) {
+    alert('Merci de renseigner votre métier et votre email.');
+    return;
+  }
+
+  if (!email.includes('@')) {
+    alert('Merci de saisir un email valide.');
+    return;
+  }
+
+  const btn = document.getElementById('btnRapport');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+
+  const pct = window._quizResult ? window._quizResult.pct : null;
+  const resilience = pct !== null ? Math.round(100 - pct) : null;
+
+  try {
+    const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        fields: {
+          'Métier': metier,
+          'Email': email,
+          'Score Résilience': resilience,
+          'Usage IA': 'Via quiz viral',
+          'Statut': 'Nouveau'
+        }
+      })
+    });
+
+    if (response.ok) {
+      showScreen('confirmation');
+    } else {
+      throw new Error('Erreur Airtable');
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = 'Recevoir mon rapport détaillé →';
+    alert('Une erreur est survenue. Veuillez réessayer.');
+  }
+}
+</script>
+</body>
+</html>
