@@ -410,7 +410,87 @@ h1 em {
   font-weight: 500;
 }
 
-/* Share */
+/* CTA rapport — EN PREMIER sur mobile */
+.cta-rapport {
+  width: 100%;
+  max-width: 480px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 4px;
+  padding: 28px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.cta-rapport-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.cta-rapport-sub {
+  font-size: 13px;
+  color: var(--texte-dim);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.cta-form { display: flex; flex-direction: column; gap: 10px; }
+
+.cta-input {
+  background: #0A0A0A;
+  border: 1px solid #2A2A2A;
+  border-radius: 2px;
+  padding: 12px 16px;
+  color: var(--texte);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.cta-input:focus { border-color: var(--rouge); }
+.cta-input::placeholder { color: #444; }
+
+/* Fix select arrow on dark bg */
+select.cta-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888880' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+select.cta-input option {
+  background: #1C1C1C;
+  color: var(--texte);
+}
+
+.btn-rapport {
+  background: var(--rouge);
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s;
+  text-align: center;
+}
+.btn-rapport:hover { background: #CC1A08; }
+.btn-rapport:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cta-note {
+  font-size: 11px;
+  color: #444;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Share — EN SECOND */
 .share-section {
   width: 100%;
   max-width: 480px;
@@ -449,69 +529,6 @@ h1 em {
 .btn-x { background: #111; color: #fff; border: 1px solid #333; }
 .btn-whatsapp { background: #25D366; color: #fff; }
 .btn-copy { background: #222; color: var(--texte); border: 1px solid #333; }
-
-/* CTA rapport */
-.cta-rapport {
-  width: 100%;
-  max-width: 480px;
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 4px;
-  padding: 28px;
-  text-align: left;
-}
-
-.cta-rapport-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  margin-bottom: 8px;
-}
-
-.cta-rapport-sub {
-  font-size: 13px;
-  color: var(--texte-dim);
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.cta-form { display: flex; flex-direction: column; gap: 10px; }
-
-.cta-input {
-  background: #0A0A0A;
-  border: 1px solid #2A2A2A;
-  border-radius: 2px;
-  padding: 12px 16px;
-  color: var(--texte);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.cta-input:focus { border-color: var(--rouge); }
-.cta-input::placeholder { color: #444; }
-
-.btn-rapport {
-  background: var(--rouge);
-  color: #fff;
-  border: none;
-  padding: 14px 24px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: background 0.2s;
-  text-align: center;
-}
-.btn-rapport:hover { background: #CC1A08; }
-.btn-rapport:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.cta-note {
-  font-size: 11px;
-  color: #444;
-  text-align: center;
-  margin-top: 4px;
-}
 
 /* Source */
 .source-footer {
@@ -571,14 +588,33 @@ h1 em {
 .option:nth-child(3) { animation-delay: 0.15s; }
 .option:nth-child(4) { animation-delay: 0.2s; }
 
-/* Mobile */
+/* ═══ MOBILE ═══ */
 @media (max-width: 600px) {
   .landing-hero { padding: 40px 24px; }
   .landing-stats { padding: 24px; gap: 24px; flex-wrap: wrap; }
   .landing-top { padding: 20px 24px 0; }
   #quiz { padding: 24px; }
   #resultat { padding: 32px 24px; }
+
+  /* Cercle plus compact sur mobile */
+  .score-circle {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 24px;
+  }
+  .score-circle svg {
+    width: 150px;
+    height: 150px;
+  }
+  .score-pct { font-size: 38px; }
+
+  .score-title { font-size: 22px; }
+  .score-desc { font-size: 13px; margin-bottom: 12px; }
+  .horizon-badge { margin-bottom: 28px; }
+
   .share-buttons { flex-direction: column; align-items: stretch; }
+
+  .cta-rapport { padding: 20px; }
 }
 </style>
 </head>
@@ -657,23 +693,14 @@ h1 em {
     <span class="horizon-value" id="horizonValue"></span>
   </div>
 
-  <div class="share-section">
-    <div class="share-title">Partager mon résultat</div>
-    <div class="share-buttons">
-      <button class="share-btn btn-linkedin" onclick="shareLinkedIn()">LinkedIn</button>
-      <button class="share-btn btn-x" onclick="shareX()">X / Twitter</button>
-      <button class="share-btn btn-whatsapp" onclick="shareWhatsApp()">WhatsApp</button>
-      <button class="share-btn btn-copy" onclick="copyLink()">Copier le lien</button>
-    </div>
-  </div>
-
+  <!-- ✅ FORMULAIRE EN PREMIER — visible sans scroll sur mobile -->
   <div class="cta-rapport">
     <div class="cta-rapport-title">Recevoir l'analyse complète</div>
     <p class="cta-rapport-sub">
       Tâche par tâche, horizon temporel, et plan d'action personnalisé en 3 axes.
       Gratuit, par email.
     </p>
-        <div class="cta-form">
+    <div class="cta-form">
       <input class="cta-input" type="text" id="inputMetier" placeholder="Votre métier exact (ex : Comptable)">
       <select class="cta-input" id="inputSecteur">
         <option value="" disabled selected>Votre secteur d'activité</option>
@@ -698,6 +725,16 @@ h1 em {
       </button>
       <div class="cta-note">Rapport envoyé en moins de 2 minutes · Aucun spam</div>
     </div>
+  </div>
+
+  <!-- ✅ PARTAGE EN SECOND — après conversion -->
+  <div class="share-section">
+    <div class="share-title">Partager mon résultat</div>
+    <div class="share-buttons">
+      <button class="share-btn btn-linkedin" onclick="shareLinkedIn()">LinkedIn</button>
+      <button class="share-btn btn-x" onclick="shareX()">X / Twitter</button>
+      <button class="share-btn btn-whatsapp" onclick="shareWhatsApp()">WhatsApp</button>
+      <button class="share-btn btn-copy" onclick="copyLink()">Copier le lien</button>
     </div>
   </div>
 
@@ -713,16 +750,14 @@ h1 em {
   <div class="confirm-title">Rapport en route !</div>
   <p class="confirm-sub">
     Votre analyse personnalisée arrive dans votre boîte mail dans moins de 2 minutes.<br><br>
-    Pensez à vérifier vos spams si vous ne le voyez pas.
+    Pensez à vérifier vos spams si vous ne le voyez pas arriver.
   </p>
 </div>
 
 <script>
 // ═══════════════════════════════════
-// CONFIGURATION AIRTABLE
+// CONFIGURATION
 // ═══════════════════════════════════
-
-
 const WEBHOOK_URL = 'https://n8n.srv781285.hstgr.cloud/webhook/quiz-resilience';
 
 // ═══════════════════════════════════
@@ -807,7 +842,7 @@ const QUESTIONS = [
 let currentQ = 0;
 let totalScore = 0;
 let answers = [];
-const MAX_SCORE = 126; // sum of all max option scores
+const MAX_SCORE = 126;
 
 // ═══════════════════════════════════
 // NAVIGATION
@@ -858,7 +893,6 @@ function selectOption(idx, score) {
 
   setTimeout(() => {
     totalScore += score;
-    // Stocker question + réponse choisie (libellé complet)
     answers.push({
       question: QUESTIONS[currentQ].q,
       reponse: QUESTIONS[currentQ].options[idx].text,
@@ -881,7 +915,6 @@ function showResults() {
   const pct = Math.round((totalScore / MAX_SCORE) * 100);
   showScreen('resultat');
 
-  // Animate score
   const scoreEl = document.getElementById('scoreDisplay');
   let current = 0;
   const interval = setInterval(() => {
@@ -890,7 +923,6 @@ function showResults() {
     if (current >= pct) clearInterval(interval);
   }, 20);
 
-  // Animate circle
   const circle = document.getElementById('circleFill');
   const circumference = 565;
   const offset = circumference - (pct / 100) * circumference;
@@ -930,7 +962,6 @@ function showResults() {
   document.getElementById('horizonValue').textContent = horizon;
   document.getElementById('horizonValue').style.color = color;
 
-  // Store for sharing
   window._quizResult = { pct, title, color };
 }
 
@@ -966,7 +997,7 @@ function copyLink() {
 }
 
 // ═══════════════════════════════════
-// SUBMIT TO AIRTABLE
+// SUBMIT
 // ═══════════════════════════════════
 async function sendToAirtable() {
   const metier = document.getElementById('inputMetier').value.trim();
@@ -991,7 +1022,6 @@ async function sendToAirtable() {
   const pct = window._quizResult ? window._quizResult.pct : null;
   const resilience = pct !== null ? Math.round(100 - pct) : null;
 
-  // Construire le résumé des réponses quiz
   const reponsesQuiz = answers.map((a, i) =>
     `Q${i+1}. ${a.question}\n   → ${a.reponse}`
   ).join('\n\n');
@@ -1001,10 +1031,10 @@ async function sendToAirtable() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        metier: metier,
-        secteur: secteur,
-        experience: experience,
-        email: email,
+        metier,
+        secteur,
+        experience,
+        email,
         score_resilience: resilience,
         score_remplacabilite: pct,
         reponses_quiz: reponsesQuiz
