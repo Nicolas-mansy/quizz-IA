@@ -20,567 +20,126 @@
   --vert: #2ECC71;
   --orange: #F39C12;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--noir);
-  color: var(--texte);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* GRAIN OVERLAY */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0.4;
-}
-
+body { font-family: 'DM Sans', sans-serif; background: var(--noir); color: var(--texte); min-height: 100vh; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 .screen { display: none; min-height: 100vh; }
 .screen.active { display: flex; flex-direction: column; }
 
-/* ═══ LANDING ═══ */
-#landing {
-  justify-content: space-between;
-  padding: 0;
-}
-
-.landing-top {
-  padding: 32px 40px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--texte-dim);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.source-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--texte-dim);
-  border: 1px solid #2A2A2A;
-  padding: 5px 10px;
-  border-radius: 4px;
-}
-
-.landing-hero {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px 40px;
-  max-width: 760px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.landing-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--rouge);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.landing-label::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--rouge);
-}
-
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 6vw, 64px);
-  font-weight: 900;
-  line-height: 1.05;
-  color: var(--texte);
-  margin-bottom: 28px;
-  letter-spacing: -1px;
-}
-
-h1 em {
-  font-style: italic;
-  color: var(--rouge);
-}
-
-.landing-sub {
-  font-size: 16px;
-  color: var(--texte-dim);
-  line-height: 1.6;
-  max-width: 480px;
-  margin-bottom: 48px;
-}
-
-.btn-start {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--rouge);
-  color: #fff;
-  border: none;
-  padding: 18px 36px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
-  width: fit-content;
-}
-
-.btn-start:hover {
-  background: #CC1A08;
-  transform: translateY(-1px);
-}
-
-.btn-start .arrow {
-  font-size: 18px;
-  transition: transform 0.2s;
-}
+/* LANDING */
+#landing { justify-content: space-between; padding: 0; }
+.landing-top { padding: 32px 40px 0; display: flex; align-items: center; justify-content: space-between; }
+.logo-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; }
+.source-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--texte-dim); border: 1px solid #2A2A2A; padding: 5px 10px; border-radius: 4px; }
+.landing-hero { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px 40px; max-width: 760px; margin: 0 auto; width: 100%; }
+.landing-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--rouge); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+.landing-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--rouge); }
+h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 64px); font-weight: 900; line-height: 1.05; color: var(--texte); margin-bottom: 28px; letter-spacing: -1px; }
+h1 em { font-style: italic; color: var(--rouge); }
+.landing-sub { font-size: 16px; color: var(--texte-dim); line-height: 1.6; max-width: 480px; margin-bottom: 48px; }
+.btn-start { display: inline-flex; align-items: center; gap: 14px; background: var(--rouge); color: #fff; border: none; padding: 18px 36px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; border-radius: 2px; transition: all 0.2s; letter-spacing: 0.3px; width: fit-content; }
+.btn-start:hover { background: #CC1A08; transform: translateY(-1px); }
+.btn-start .arrow { font-size: 18px; transition: transform 0.2s; }
 .btn-start:hover .arrow { transform: translateX(4px); }
-
-.landing-stats {
-  display: flex;
-  gap: 40px;
-  padding: 32px 40px;
-  border-top: 1px solid #1C1C1C;
-  max-width: 760px;
-  margin: 0 auto;
-  width: 100%;
-}
-
+.landing-stats { display: flex; gap: 40px; padding: 32px 40px; border-top: 1px solid #1C1C1C; max-width: 760px; margin: 0 auto; width: 100%; }
 .stat-item { display: flex; flex-direction: column; gap: 4px; }
-.stat-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--texte);
-}
-.stat-label {
-  font-size: 12px;
-  color: var(--texte-dim);
-  line-height: 1.4;
-}
+.stat-num { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--texte); }
+.stat-label { font-size: 12px; color: var(--texte-dim); line-height: 1.4; }
 
-/* ═══ QUIZ ═══ */
-#quiz {
-  flex-direction: column;
-  padding: 32px 40px;
-  max-width: 680px;
-  margin: 0 auto;
-  width: 100%;
-}
+/* QUIZ */
+#quiz { flex-direction: column; padding: 32px 40px; max-width: 680px; margin: 0 auto; width: 100%; }
+.quiz-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px; }
+.quiz-logo { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; }
+.progress-wrap { display: flex; align-items: center; gap: 12px; }
+.progress-bar { width: 120px; height: 2px; background: #222; border-radius: 1px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--rouge); border-radius: 1px; transition: width 0.4s ease; }
+.progress-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); }
+.question-number { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--rouge); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+.question-text { font-family: 'Playfair Display', serif; font-size: clamp(24px, 4vw, 34px); font-weight: 700; line-height: 1.2; margin-bottom: 12px; letter-spacing: -0.3px; }
+.question-hint { font-size: 13px; color: var(--texte-dim); margin-bottom: 48px; font-style: italic; }
+.options { display: flex; flex-direction: column; gap: 12px; }
+.option { display: flex; align-items: center; gap: 16px; padding: 20px 24px; border: 1px solid #222; border-radius: 4px; cursor: pointer; transition: all 0.15s; background: var(--gris-fonce); }
+.option:hover { border-color: var(--rouge); background: #160800; transform: translateX(4px); }
+.option.selected { border-color: var(--rouge); background: #160800; }
+.option-letter { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); width: 20px; flex-shrink: 0; }
+.option-text { font-size: 15px; color: var(--texte); line-height: 1.4; }
 
-.quiz-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 60px;
-}
-
-.quiz-logo {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--texte-dim);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.progress-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.progress-bar {
-  width: 120px;
-  height: 2px;
-  background: #222;
-  border-radius: 1px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--rouge);
-  border-radius: 1px;
-  transition: width 0.4s ease;
-}
-
-.progress-count {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--texte-dim);
-}
-
-.question-number {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--rouge);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.question-text {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(24px, 4vw, 34px);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 12px;
-  letter-spacing: -0.3px;
-}
-
-.question-hint {
-  font-size: 13px;
-  color: var(--texte-dim);
-  margin-bottom: 48px;
-  font-style: italic;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.option {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px 24px;
-  border: 1px solid #222;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
-  background: var(--gris-fonce);
-}
-
-.option:hover {
-  border-color: var(--rouge);
-  background: #160800;
-  transform: translateX(4px);
-}
-
-.option.selected {
-  border-color: var(--rouge);
-  background: #160800;
-}
-
-.option-letter {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--texte-dim);
-  width: 20px;
-  flex-shrink: 0;
-}
-
-.option-text {
-  font-size: 15px;
-  color: var(--texte);
-  line-height: 1.4;
-}
-
-/* ═══ RESULTAT ═══ */
-#resultat {
-  flex-direction: column;
-  padding: 40px;
-  max-width: 680px;
-  margin: 0 auto;
-  width: 100%;
-  align-items: center;
-  text-align: center;
-}
-
-.result-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--texte-dim);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 40px;
-}
-
-.score-circle {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin-bottom: 32px;
-}
-
-.score-circle svg {
-  transform: rotate(-90deg);
-  width: 200px;
-  height: 200px;
-}
-
-.score-circle circle {
-  fill: none;
-  stroke-width: 6;
-}
-
+/* RESULTAT */
+#resultat { flex-direction: column; padding: 40px; max-width: 680px; margin: 0 auto; width: 100%; align-items: center; text-align: center; }
+.result-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; }
+.score-circle { position: relative; width: 200px; height: 200px; margin-bottom: 32px; }
+.score-circle svg { transform: rotate(-90deg); width: 200px; height: 200px; }
+.score-circle circle { fill: none; stroke-width: 6; }
 .circle-bg { stroke: #1C1C1C; }
+.circle-fill { stroke-dasharray: 565; stroke-dashoffset: 565; transition: stroke-dashoffset 1.5s cubic-bezier(0.34, 1.56, 0.64, 1); stroke-linecap: round; }
+.score-number { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-pct { font-family: 'DM Mono', monospace; font-size: 52px; font-weight: 500; line-height: 1; }
+.score-unit { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--texte-dim); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+.score-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 16px; }
+.score-desc { font-size: 14px; color: var(--texte-dim); line-height: 1.7; max-width: 440px; margin-bottom: 16px; }
+.horizon-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #2A2A2A; padding: 10px 20px; border-radius: 2px; margin-bottom: 40px; }
+.horizon-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--texte-dim); text-transform: uppercase; letter-spacing: 1.5px; }
+.horizon-value { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; }
 
-.circle-fill {
-  stroke-dasharray: 565;
-  stroke-dashoffset: 565;
-  transition: stroke-dashoffset 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  stroke-linecap: round;
-}
-
-.score-number {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.score-pct {
-  font-family: 'DM Mono', monospace;
-  font-size: 52px;
-  font-weight: 500;
-  line-height: 1;
-}
-
-.score-unit {
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  color: var(--texte-dim);
-  margin-top: 4px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.score-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.score-desc {
-  font-size: 14px;
-  color: var(--texte-dim);
-  line-height: 1.7;
-  max-width: 440px;
-  margin-bottom: 16px;
-}
-
-.horizon-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #2A2A2A;
-  padding: 10px 20px;
-  border-radius: 2px;
-  margin-bottom: 40px;
-}
-
-.horizon-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--texte-dim);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-}
-
-.horizon-value {
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-/* CTA rapport — EN PREMIER sur mobile */
-.cta-rapport {
-  width: 100%;
-  max-width: 480px;
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 4px;
-  padding: 28px;
-  text-align: left;
-  margin-bottom: 32px;
-}
-
-.cta-rapport-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  margin-bottom: 8px;
-}
-
-.cta-rapport-sub {
-  font-size: 13px;
-  color: var(--texte-dim);
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
+/* CTA form */
+.cta-rapport { width: 100%; max-width: 480px; background: #111; border: 1px solid #222; border-radius: 4px; padding: 28px; text-align: left; margin-bottom: 32px; }
+.cta-rapport-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; }
+.cta-rapport-sub { font-size: 13px; color: var(--texte-dim); margin-bottom: 20px; line-height: 1.5; }
 .cta-form { display: flex; flex-direction: column; gap: 10px; }
-
-.cta-input {
-  background: #0A0A0A;
-  border: 1px solid #2A2A2A;
-  border-radius: 2px;
-  padding: 12px 16px;
-  color: var(--texte);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
-  -webkit-appearance: none;
-  appearance: none;
-}
+.cta-input { background: #0A0A0A; border: 1px solid #2A2A2A; border-radius: 2px; padding: 12px 16px; color: var(--texte); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
 .cta-input:focus { border-color: var(--rouge); }
 .cta-input::placeholder { color: #444; }
-
-/* Fix select arrow on dark bg */
-select.cta-input {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888880' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
-  cursor: pointer;
-}
-
-select.cta-input option {
-  background: #1C1C1C;
-  color: var(--texte);
-}
-
-.btn-rapport {
-  background: var(--rouge);
-  color: #fff;
-  border: none;
-  padding: 14px 24px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: background 0.2s;
-  text-align: center;
-}
+select.cta-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888880' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+select.cta-input option { background: #1C1C1C; color: var(--texte); }
+.btn-rapport { background: var(--rouge); color: #fff; border: none; padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; border-radius: 2px; transition: background 0.2s; text-align: center; }
 .btn-rapport:hover { background: #CC1A08; }
 .btn-rapport:disabled { opacity: 0.5; cursor: not-allowed; }
+.cta-note { font-size: 11px; color: #444; text-align: center; margin-top: 4px; }
 
-.cta-note {
-  font-size: 11px;
-  color: #444;
-  text-align: center;
-  margin-top: 4px;
-}
-
-/* Share — EN SECOND */
-.share-section {
-  width: 100%;
-  max-width: 480px;
-  margin-bottom: 32px;
-}
-
-.share-title {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--texte-dim);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.share-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.share-btn {
-  padding: 11px 20px;
-  border: none;
-  border-radius: 2px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
-}
+/* Share */
+.share-section { width: 100%; max-width: 480px; margin-bottom: 32px; }
+.share-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.share-btn { padding: 11px 20px; border: none; border-radius: 2px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
 .share-btn:hover { transform: translateY(-1px); opacity: 0.9; }
-
 .btn-linkedin { background: #0077B5; color: #fff; }
 .btn-x { background: #111; color: #fff; border: 1px solid #333; }
 .btn-whatsapp { background: #25D366; color: #fff; }
 .btn-copy { background: #222; color: var(--texte); border: 1px solid #333; }
+.source-footer { margin-top: 32px; font-family: 'DM Mono', monospace; font-size: 10px; color: #333; text-align: center; line-height: 1.8; }
 
-/* Source */
-.source-footer {
-  margin-top: 32px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: #333;
-  text-align: center;
-  line-height: 1.8;
-}
+/* CONFIRMATION */
+#confirmation { flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; }
+.confirm-icon { font-size: 48px; margin-bottom: 24px; }
+.confirm-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+.confirm-sub { font-size: 15px; color: var(--texte-dim); max-width: 400px; line-height: 1.6; }
 
-/* Confirmation */
-#confirmation {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 40px;
-  text-align: center;
-}
-
-.confirm-icon {
-  font-size: 48px;
-  margin-bottom: 24px;
-}
-
-.confirm-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-
-.confirm-sub {
-  font-size: 15px;
-  color: var(--texte-dim);
-  max-width: 400px;
-  line-height: 1.6;
-}
+/* COMPLET / WAITLIST */
+#complet { flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; }
+.complet-badge { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; display: flex; align-items: center; gap: 10px; justify-content: center; }
+.complet-badge::before, .complet-badge::after { content: ''; display: block; width: 24px; height: 1px; background: var(--texte-dim); }
+.complet-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; letter-spacing: -0.5px; }
+.complet-title em { font-style: italic; color: var(--rouge); }
+.complet-sub { font-size: 15px; color: var(--texte-dim); max-width: 440px; line-height: 1.7; margin-bottom: 40px; }
+.waitlist-box { width: 100%; max-width: 440px; background: #111; border: 1px solid #222; border-radius: 4px; padding: 28px; text-align: left; margin-bottom: 32px; }
+.waitlist-box-title { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 8px; }
+.waitlist-box-sub { font-size: 13px; color: var(--texte-dim); margin-bottom: 16px; line-height: 1.5; }
+.waitlist-form { display: flex; gap: 8px; }
+.waitlist-input { flex: 1; background: #0A0A0A; border: 1px solid #2A2A2A; border-radius: 2px; padding: 12px 16px; color: var(--texte); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+.waitlist-input:focus { border-color: var(--rouge); }
+.waitlist-input::placeholder { color: #444; }
+.btn-waitlist { background: var(--rouge); color: #fff; border: none; padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 2px; transition: background 0.2s; white-space: nowrap; }
+.btn-waitlist:hover { background: #CC1A08; }
+.btn-waitlist:disabled { opacity: 0.5; cursor: not-allowed; }
+.waitlist-note { font-size: 11px; color: #444; margin-top: 8px; }
+.waitlist-share { width: 100%; max-width: 440px; }
+.waitlist-share-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.waitlist-confirm { font-size: 13px; color: var(--vert); margin-top: 10px; display: none; }
 
 /* Animations */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .fade-up { animation: fadeUp 0.5s ease forwards; }
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-16px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
+@keyframes slideIn { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
 .question-number, .question-text, .question-hint { animation: slideIn 0.35s ease forwards; }
 .option { animation: fadeUp 0.3s ease forwards; opacity: 0; }
 .option:nth-child(1) { animation-delay: 0.05s; }
@@ -588,92 +147,63 @@ select.cta-input option {
 .option:nth-child(3) { animation-delay: 0.15s; }
 .option:nth-child(4) { animation-delay: 0.2s; }
 
-/* ═══ MOBILE ═══ */
+/* Mobile */
 @media (max-width: 600px) {
   .landing-hero { padding: 40px 24px; }
   .landing-stats { padding: 24px; gap: 24px; flex-wrap: wrap; }
   .landing-top { padding: 20px 24px 0; }
   #quiz { padding: 24px; }
   #resultat { padding: 32px 24px; }
-
-  /* Cercle plus compact sur mobile */
-  .score-circle {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 24px;
-  }
-  .score-circle svg {
-    width: 150px;
-    height: 150px;
-  }
+  #confirmation, #complet { padding: 40px 24px; }
+  .score-circle { width: 150px; height: 150px; margin-bottom: 24px; }
+  .score-circle svg { width: 150px; height: 150px; }
   .score-pct { font-size: 38px; }
-
   .score-title { font-size: 22px; }
   .score-desc { font-size: 13px; margin-bottom: 12px; }
   .horizon-badge { margin-bottom: 28px; }
-
   .share-buttons { flex-direction: column; align-items: stretch; }
-
   .cta-rapport { padding: 20px; }
+  .waitlist-form { flex-direction: column; }
+  .btn-waitlist { width: 100%; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════ LANDING ══════════ -->
+<!-- LANDING -->
 <div id="landing" class="screen active">
   <div class="landing-top">
     <span class="logo-tag">Résilience IA</span>
     <span class="source-tag">Basé sur l'étude Anthropic · Mars 2026</span>
   </div>
-
   <div class="landing-hero">
     <div class="landing-label">Test de résilience professionnelle</div>
     <h1>Votre poste est-il <em>remplaçable</em> par l'IA ?</h1>
-    <p class="landing-sub">
-      7 questions sur vos tâches quotidiennes. Résultat immédiat.
-      Basé sur 200 000 conversations analysées et l'étude Anthropic sur l'impact de l'IA sur le marché du travail.
-    </p>
-    <button class="btn-start" onclick="startQuiz()">
-      Faire le test <span class="arrow">→</span>
-    </button>
+    <p class="landing-sub">7 questions sur vos tâches quotidiennes. Résultat immédiat. Basé sur 200 000 conversations analysées et l'étude Anthropic sur l'impact de l'IA sur le marché du travail.</p>
+    <button class="btn-start" onclick="startQuiz()">Faire le test <span class="arrow">→</span></button>
   </div>
-
   <div class="landing-stats">
-    <div class="stat-item">
-      <span class="stat-num">90%</span>
-      <span class="stat-label">des tâches de bureau<br>théoriquement couvertes</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">2026</span>
-      <span class="stat-label">Étude Anthropic<br>publiée en mars</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">2 min</span>
-      <span class="stat-label">pour connaître<br>votre score</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">90%</span><span class="stat-label">des tâches de bureau<br>théoriquement couvertes</span></div>
+    <div class="stat-item"><span class="stat-num">2026</span><span class="stat-label">Étude Anthropic<br>publiée en mars</span></div>
+    <div class="stat-item"><span class="stat-num">2 min</span><span class="stat-label">pour connaître<br>votre score</span></div>
   </div>
 </div>
 
-<!-- ══════════ QUIZ ══════════ -->
+<!-- QUIZ -->
 <div id="quiz" class="screen">
   <div class="quiz-nav">
     <span class="quiz-logo">Résilience IA</span>
     <div class="progress-wrap">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
       <span class="progress-count" id="progressCount">1 / 7</span>
     </div>
   </div>
-
   <div id="questionArea"></div>
 </div>
 
-<!-- ══════════ RESULTAT ══════════ -->
+<!-- RESULTAT -->
 <div id="resultat" class="screen">
   <div class="result-label">Votre résultat</div>
-
   <div class="score-circle">
     <svg viewBox="0 0 200 200">
       <circle class="circle-bg" cx="100" cy="100" r="90"/>
@@ -684,22 +214,17 @@ select.cta-input option {
       <span class="score-unit">remplaçabilité</span>
     </div>
   </div>
-
   <h2 class="score-title" id="scoreTitle"></h2>
   <p class="score-desc" id="scoreDesc"></p>
-
   <div class="horizon-badge">
     <span class="horizon-label">Horizon estimé</span>
     <span class="horizon-value" id="horizonValue"></span>
   </div>
 
-  <!-- ✅ FORMULAIRE EN PREMIER — visible sans scroll sur mobile -->
+  <!-- FORMULAIRE EN PREMIER -->
   <div class="cta-rapport">
     <div class="cta-rapport-title">Recevoir l'analyse complète</div>
-    <p class="cta-rapport-sub">
-      Tâche par tâche, horizon temporel, et plan d'action personnalisé en 3 axes.
-      Gratuit, par email.
-    </p>
+    <p class="cta-rapport-sub">Tâche par tâche, horizon temporel, et plan d'action personnalisé en 3 axes. Gratuit, par email.</p>
     <div class="cta-form">
       <input class="cta-input" type="text" id="inputMetier" placeholder="Votre métier exact (ex : Comptable)">
       <select class="cta-input" id="inputSecteur">
@@ -714,20 +239,16 @@ select.cta-input option {
       </select>
       <select class="cta-input" id="inputExperience">
         <option value="" disabled selected>Années d'expérience dans ce métier</option>
-        <option>Moins de 2 ans</option>
-        <option>2 à 5 ans</option>
-        <option>5 à 10 ans</option>
-        <option>Plus de 10 ans</option>
+        <option>Moins de 2 ans</option><option>2 à 5 ans</option>
+        <option>5 à 10 ans</option><option>Plus de 10 ans</option>
       </select>
       <input class="cta-input" type="email" id="inputEmail" placeholder="Votre email professionnel">
-      <button class="btn-rapport" id="btnRapport" onclick="sendToAirtable()">
-        Recevoir mon rapport détaillé →
-      </button>
+      <button class="btn-rapport" id="btnRapport" onclick="sendToWebhook()">Recevoir mon rapport détaillé →</button>
       <div class="cta-note">Rapport envoyé en moins de 2 minutes · Aucun spam</div>
     </div>
   </div>
 
-  <!-- ✅ PARTAGE EN SECOND — après conversion -->
+  <!-- PARTAGE EN SECOND -->
   <div class="share-section">
     <div class="share-title">Partager mon résultat</div>
     <div class="share-buttons">
@@ -737,116 +258,62 @@ select.cta-input option {
       <button class="share-btn btn-copy" onclick="copyLink()">Copier le lien</button>
     </div>
   </div>
-
   <div class="source-footer">
     Sources : Anthropic "Labor Market Impacts of AI" (Mars 2026) · O*NET Database · Eloundou et al. (2023)<br>
     Ce test donne une indication générale. Ce n'est pas un diagnostic individuel.
   </div>
 </div>
 
-<!-- ══════════ CONFIRMATION ══════════ -->
+<!-- CONFIRMATION -->
 <div id="confirmation" class="screen">
   <div class="confirm-icon">✉️</div>
   <div class="confirm-title">Rapport en route !</div>
-  <p class="confirm-sub">
-    Votre analyse personnalisée arrive dans votre boîte mail dans moins de 2 minutes.<br><br>
-    Pensez à vérifier vos spams si vous ne le voyez pas arriver.
-  </p>
+  <p class="confirm-sub">Votre analyse personnalisée arrive dans votre boîte mail dans moins de 2 minutes.<br><br>Pensez à vérifier vos spams si vous ne le voyez pas.</p>
+</div>
+
+<!-- COMPLET / WAITLIST -->
+<div id="complet" class="screen">
+  <div class="complet-badge">Session terminée</div>
+  <h2 class="complet-title">Les 100 premiers audits<br>gratuits sont <em>complets.</em></h2>
+  <p class="complet-sub">La demande a dépassé nos attentes. Une nouvelle session ouvre prochainement — laissez votre email pour être notifié en priorité.</p>
+
+  <div class="waitlist-box">
+    <div class="waitlist-box-title">Être notifié en priorité</div>
+    <p class="waitlist-box-sub">Vous serez parmi les premiers à accéder à la prochaine session.</p>
+    <div class="waitlist-form">
+      <input class="waitlist-input" type="email" id="waitlistEmail" placeholder="Votre email">
+      <button class="btn-waitlist" id="btnWaitlist" onclick="sendWaitlist()">Me notifier →</button>
+    </div>
+    <p class="waitlist-note">Aucun spam · Un seul email quand la session rouvre</p>
+    <p class="waitlist-confirm" id="waitlistConfirm">✓ Vous êtes sur la liste — on vous prévient dès la réouverture.</p>
+  </div>
+
+  <div class="waitlist-share">
+    <div class="waitlist-share-title">En attendant, partagez le test</div>
+    <div class="share-buttons">
+      <button class="share-btn btn-linkedin" onclick="shareLinkedIn()">LinkedIn</button>
+      <button class="share-btn btn-whatsapp" onclick="shareWhatsApp()">WhatsApp</button>
+      <button class="share-btn btn-copy" onclick="copyLink()">Copier le lien</button>
+    </div>
+  </div>
 </div>
 
 <script>
-// ═══════════════════════════════════
-// CONFIGURATION
-// ═══════════════════════════════════
 const WEBHOOK_URL = 'https://n8n.srv781285.hstgr.cloud/webhook/quiz-resilience';
 
-// ═══════════════════════════════════
-// QUESTIONS
-// ═══════════════════════════════════
 const QUESTIONS = [
-  {
-    q: "Traitez-vous de l'information au quotidien ?",
-    hint: "Veille, recherches, lecture de documents, collecte de données…",
-    options: [
-      { text: "Jamais ou presque", score: 0 },
-      { text: "Parfois", score: 8 },
-      { text: "Souvent", score: 16 },
-      { text: "C'est le cœur de mon travail", score: 24 }
-    ]
-  },
-  {
-    q: "Rédigez-vous des contenus écrits ?",
-    hint: "Emails, rapports, articles, présentations, documentation…",
-    options: [
-      { text: "Jamais ou presque", score: 0 },
-      { text: "Parfois", score: 7 },
-      { text: "Souvent", score: 14 },
-      { text: "C'est le cœur de mon travail", score: 20 }
-    ]
-  },
-  {
-    q: "Vos tâches suivent-elles des processus répétitifs ?",
-    hint: "Processus standardisés, réponses types, workflows récurrents…",
-    options: [
-      { text: "Chaque jour est différent", score: 0 },
-      { text: "Part de routine", score: 8 },
-      { text: "Beaucoup de répétition", score: 16 },
-      { text: "Entièrement procédural", score: 22 }
-    ]
-  },
-  {
-    q: "Travaillez-vous principalement sur écran ?",
-    hint: "Logiciels métiers, tableurs, bases de données, code…",
-    options: [
-      { text: "Rarement", score: 0 },
-      { text: "Une partie de mon temps", score: 6 },
-      { text: "La majorité", score: 12 },
-      { text: "Quasi exclusivement", score: 18 }
-    ]
-  },
-  {
-    q: "Prenez-vous des décisions sur la base de chiffres ?",
-    hint: "Tableaux de bord, stats, analyses, KPI, reporting…",
-    options: [
-      { text: "Jamais ou presque", score: 0 },
-      { text: "Parfois", score: 5 },
-      { text: "Souvent", score: 10 },
-      { text: "C'est le cœur de mon travail", score: 14 }
-    ]
-  },
-  {
-    q: "Votre travail implique-t-il une présence physique ?",
-    hint: "Contact humain direct, soins, artisanat, terrain, déplacements…",
-    options: [
-      { text: "Tout est sur écran", score: 16 },
-      { text: "Rarement sur le terrain", score: 10 },
-      { text: "Régulièrement en présentiel", score: 4 },
-      { text: "L'essentiel de mon travail", score: 0 }
-    ]
-  },
-  {
-    q: "Gérez-vous des relations humaines complexes ?",
-    hint: "Négociation, médiation, accompagnement, conseil, management…",
-    options: [
-      { text: "Jamais ou presque", score: 12 },
-      { text: "Parfois", score: 8 },
-      { text: "Souvent", score: 4 },
-      { text: "C'est le cœur de mon travail", score: 0 }
-    ]
-  }
+  { q: "Traitez-vous de l'information au quotidien ?", hint: "Veille, recherches, lecture de documents, collecte de données…", options: [{ text: "Jamais ou presque", score: 0 }, { text: "Parfois", score: 8 }, { text: "Souvent", score: 16 }, { text: "C'est le cœur de mon travail", score: 24 }] },
+  { q: "Rédigez-vous des contenus écrits ?", hint: "Emails, rapports, articles, présentations, documentation…", options: [{ text: "Jamais ou presque", score: 0 }, { text: "Parfois", score: 7 }, { text: "Souvent", score: 14 }, { text: "C'est le cœur de mon travail", score: 20 }] },
+  { q: "Vos tâches suivent-elles des processus répétitifs ?", hint: "Processus standardisés, réponses types, workflows récurrents…", options: [{ text: "Chaque jour est différent", score: 0 }, { text: "Part de routine", score: 8 }, { text: "Beaucoup de répétition", score: 16 }, { text: "Entièrement procédural", score: 22 }] },
+  { q: "Travaillez-vous principalement sur écran ?", hint: "Logiciels métiers, tableurs, bases de données, code…", options: [{ text: "Rarement", score: 0 }, { text: "Une partie de mon temps", score: 6 }, { text: "La majorité", score: 12 }, { text: "Quasi exclusivement", score: 18 }] },
+  { q: "Prenez-vous des décisions sur la base de chiffres ?", hint: "Tableaux de bord, stats, analyses, KPI, reporting…", options: [{ text: "Jamais ou presque", score: 0 }, { text: "Parfois", score: 5 }, { text: "Souvent", score: 10 }, { text: "C'est le cœur de mon travail", score: 14 }] },
+  { q: "Votre travail implique-t-il une présence physique ?", hint: "Contact humain direct, soins, artisanat, terrain, déplacements…", options: [{ text: "Tout est sur écran", score: 16 }, { text: "Rarement sur le terrain", score: 10 }, { text: "Régulièrement en présentiel", score: 4 }, { text: "L'essentiel de mon travail", score: 0 }] },
+  { q: "Gérez-vous des relations humaines complexes ?", hint: "Négociation, médiation, accompagnement, conseil, management…", options: [{ text: "Jamais ou presque", score: 12 }, { text: "Parfois", score: 8 }, { text: "Souvent", score: 4 }, { text: "C'est le cœur de mon travail", score: 0 }] }
 ];
 
-// ═══════════════════════════════════
-// STATE
-// ═══════════════════════════════════
-let currentQ = 0;
-let totalScore = 0;
-let answers = [];
+let currentQ = 0, totalScore = 0, answers = [];
 const MAX_SCORE = 126;
 
-// ═══════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -854,25 +321,17 @@ function showScreen(id) {
 }
 
 function startQuiz() {
-  currentQ = 0;
-  totalScore = 0;
-  answers = [];
+  currentQ = 0; totalScore = 0; answers = [];
   showScreen('quiz');
   renderQuestion();
 }
 
-// ═══════════════════════════════════
-// RENDER QUESTION
-// ═══════════════════════════════════
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
   const pct = Math.round((currentQ / QUESTIONS.length) * 100);
-
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressCount').textContent = (currentQ + 1) + ' / ' + QUESTIONS.length;
-
-  const area = document.getElementById('questionArea');
-  area.innerHTML = `
+  document.getElementById('questionArea').innerHTML = `
     <div class="question-number">Question ${currentQ + 1} sur ${QUESTIONS.length}</div>
     <div class="question-text">${q.q}</div>
     <div class="question-hint">${q.hint}</div>
@@ -881,40 +340,25 @@ function renderQuestion() {
         <div class="option" onclick="selectOption(${i}, ${opt.score})" data-idx="${i}">
           <span class="option-letter">${String.fromCharCode(65 + i)}</span>
           <span class="option-text">${opt.text}</span>
-        </div>
-      `).join('')}
-    </div>
-  `;
+        </div>`).join('')}
+    </div>`;
 }
 
 function selectOption(idx, score) {
   document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
   document.querySelector(`.option[data-idx="${idx}"]`).classList.add('selected');
-
   setTimeout(() => {
     totalScore += score;
-    answers.push({
-      question: QUESTIONS[currentQ].q,
-      reponse: QUESTIONS[currentQ].options[idx].text,
-      idx: idx
-    });
+    answers.push({ question: QUESTIONS[currentQ].q, reponse: QUESTIONS[currentQ].options[idx].text });
     currentQ++;
-
-    if (currentQ < QUESTIONS.length) {
-      renderQuestion();
-    } else {
-      showResults();
-    }
+    if (currentQ < QUESTIONS.length) renderQuestion();
+    else showResults();
   }, 320);
 }
 
-// ═══════════════════════════════════
-// RESULTS
-// ═══════════════════════════════════
 function showResults() {
   const pct = Math.round((totalScore / MAX_SCORE) * 100);
   showScreen('resultat');
-
   const scoreEl = document.getElementById('scoreDisplay');
   let current = 0;
   const interval = setInterval(() => {
@@ -922,133 +366,84 @@ function showResults() {
     scoreEl.textContent = current + '%';
     if (current >= pct) clearInterval(interval);
   }, 20);
-
   const circle = document.getElementById('circleFill');
-  const circumference = 565;
-  const offset = circumference - (pct / 100) * circumference;
-
+  const offset = 565 - (pct / 100) * 565;
   let color, title, desc, horizon;
-
-  if (pct <= 30) {
-    color = '#2ECC71';
-    title = 'Exposition très faible';
-    desc = 'Votre métier repose sur des compétences physiques, relationnelles ou créatives que l\'IA maîtrise encore mal. Votre position est solide à moyen terme — mais restez vigilant sur les tâches administratives connexes.';
-    horizon = 'Pas d\'horizon prévisible';
-  } else if (pct <= 50) {
-    color = '#F39C12';
-    title = 'Exposition modérée';
-    desc = 'Une partie significative de vos tâches est dans le viseur de l\'IA. Pas de panique — mais un repositionnement stratégique sur vos compétences irremplaçables s\'impose dans les 2 à 5 prochaines années.';
-    horizon = 'Transition dans 2 à 5 ans';
-  } else if (pct <= 70) {
-    color = '#E67E22';
-    title = 'Exposition élevée';
-    desc = 'Plus de la moitié de vos tâches sont automatisables à court terme. Les études Anthropic (2026) montrent que des profils similaires au vôtre sont parmi les premiers impactés. Il est temps d\'agir.';
-    horizon = 'Impact dans les 2 prochaines années';
-  } else {
-    color = '#E8220A';
-    title = 'Exposition critique';
-    desc = 'Votre poste concentre exactement les tâches que l\'IA automatise en priorité — traitement d\'information, rédaction, processus répétitifs sur écran. Une reconversion ou un repositionnement est urgent.';
-    horizon = 'Impact immédiat en cours';
-  }
-
+  if (pct <= 30) { color = '#2ECC71'; title = 'Exposition très faible'; desc = "Votre métier repose sur des compétences physiques, relationnelles ou créatives que l'IA maîtrise encore mal. Votre position est solide à moyen terme — mais restez vigilant sur les tâches administratives connexes."; horizon = "Pas d'horizon prévisible"; }
+  else if (pct <= 50) { color = '#F39C12'; title = 'Exposition modérée'; desc = "Une partie significative de vos tâches est dans le viseur de l'IA. Pas de panique — mais un repositionnement stratégique sur vos compétences irremplaçables s'impose dans les 2 à 5 prochaines années."; horizon = 'Transition dans 2 à 5 ans'; }
+  else if (pct <= 70) { color = '#E67E22'; title = 'Exposition élevée'; desc = "Plus de la moitié de vos tâches sont automatisables à court terme. Les études Anthropic (2026) montrent que des profils similaires au vôtre sont parmi les premiers impactés. Il est temps d'agir."; horizon = 'Impact dans les 2 prochaines années'; }
+  else { color = '#E8220A'; title = 'Exposition critique'; desc = "Votre poste concentre exactement les tâches que l'IA automatise en priorité — traitement d'information, rédaction, processus répétitifs sur écran. Une reconversion ou un repositionnement est urgent."; horizon = 'Impact immédiat en cours'; }
   circle.style.stroke = color;
-  setTimeout(() => {
-    circle.style.strokeDashoffset = offset;
-  }, 100);
-
+  setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
   document.getElementById('scoreDisplay').style.color = color;
   document.getElementById('scoreTitle').textContent = title;
   document.getElementById('scoreDesc').textContent = desc;
   document.getElementById('horizonValue').textContent = horizon;
   document.getElementById('horizonValue').style.color = color;
-
   window._quizResult = { pct, title, color };
 }
 
-// ═══════════════════════════════════
-// SHARE
-// ═══════════════════════════════════
 function getShareText() {
   const r = window._quizResult;
   return `Je viens de faire le test de résilience IA — mon poste est remplaçable à ${r.pct}% selon l'étude Anthropic 2026. Et toi ? 👇\n\n${window.location.href}`;
 }
-
-function shareLinkedIn() {
-  const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(getShareText())}`;
-  window.open(url, '_blank');
-}
-
-function shareX() {
-  const r = window._quizResult;
-  const text = `Mon poste est remplaçable à ${r.pct}% par l'IA (étude Anthropic 2026). Et le vôtre ? 👇`;
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
-}
-
-function shareWhatsApp() {
-  window.open(`https://wa.me/?text=${encodeURIComponent(getShareText())}`, '_blank');
-}
-
+function shareLinkedIn() { window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(getShareText())}`, '_blank'); }
+function shareX() { const r = window._quizResult; window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Mon poste est remplaçable à ${r ? r.pct : ''}% par l'IA (étude Anthropic 2026). Et le vôtre ? 👇`)}&url=${encodeURIComponent(window.location.href)}`, '_blank'); }
+function shareWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(getShareText())}`, '_blank'); }
 function copyLink() {
   navigator.clipboard.writeText(window.location.href).then(() => {
-    const btn = document.querySelector('.btn-copy');
-    btn.textContent = 'Lien copié !';
-    setTimeout(() => btn.textContent = 'Copier le lien', 2000);
+    document.querySelectorAll('.btn-copy').forEach(btn => { btn.textContent = 'Lien copié !'; setTimeout(() => btn.textContent = 'Copier le lien', 2000); });
   });
 }
 
-// ═══════════════════════════════════
-// SUBMIT
-// ═══════════════════════════════════
-async function sendToAirtable() {
+async function sendToWebhook() {
   const metier = document.getElementById('inputMetier').value.trim();
   const secteur = document.getElementById('inputSecteur').value;
   const experience = document.getElementById('inputExperience').value;
   const email = document.getElementById('inputEmail').value.trim();
-
-  if (!metier || !secteur || !experience || !email) {
-    alert('Merci de renseigner tous les champs pour recevoir votre rapport.');
-    return;
-  }
-
-  if (!email.includes('@')) {
-    alert('Merci de saisir un email valide.');
-    return;
-  }
-
+  if (!metier || !secteur || !experience || !email) { alert('Merci de renseigner tous les champs pour recevoir votre rapport.'); return; }
+  if (!email.includes('@')) { alert('Merci de saisir un email valide.'); return; }
   const btn = document.getElementById('btnRapport');
-  btn.disabled = true;
-  btn.textContent = 'Envoi en cours…';
-
+  btn.disabled = true; btn.textContent = 'Envoi en cours…';
   const pct = window._quizResult ? window._quizResult.pct : null;
   const resilience = pct !== null ? Math.round(100 - pct) : null;
-
-  const reponsesQuiz = answers.map((a, i) =>
-    `Q${i+1}. ${a.question}\n   → ${a.reponse}`
-  ).join('\n\n');
-
+  const reponsesQuiz = answers.map((a, i) => `Q${i+1}. ${a.question}\n   → ${a.reponse}`).join('\n\n');
   try {
     const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        metier,
-        secteur,
-        experience,
-        email,
-        score_resilience: resilience,
-        score_remplacabilite: pct,
-        reponses_quiz: reponsesQuiz
-      })
+      body: JSON.stringify({ metier, secteur, experience, email, score_resilience: resilience, score_remplacabilite: pct, reponses_quiz: reponsesQuiz })
     });
-
-    if (response.ok) {
+    const data = await response.json();
+    if (data.status === 'complet') {
+      showScreen('complet');
+    } else if (data.success) {
       showScreen('confirmation');
     } else {
-      throw new Error('Erreur webhook');
+      throw new Error('Erreur inattendue');
     }
   } catch (e) {
-    btn.disabled = false;
-    btn.textContent = 'Recevoir mon rapport détaillé →';
+    btn.disabled = false; btn.textContent = 'Recevoir mon rapport détaillé →';
+    alert('Une erreur est survenue. Veuillez réessayer.');
+  }
+}
+
+async function sendWaitlist() {
+  const email = document.getElementById('waitlistEmail').value.trim();
+  if (!email || !email.includes('@')) { alert('Merci de saisir un email valide.'); return; }
+  const btn = document.getElementById('btnWaitlist');
+  btn.disabled = true; btn.textContent = 'Envoi…';
+  try {
+    await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, waitlist: true })
+    });
+    document.getElementById('waitlistConfirm').style.display = 'block';
+    btn.textContent = 'Enregistré ✓';
+    document.getElementById('waitlistEmail').disabled = true;
+  } catch (e) {
+    btn.disabled = false; btn.textContent = 'Me notifier →';
     alert('Une erreur est survenue. Veuillez réessayer.');
   }
 }
