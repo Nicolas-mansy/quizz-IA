@@ -351,6 +351,7 @@ select.cta-input option { background: #1C1C1C; color: var(--texte); }
 
 <script>
 const WEBHOOK_URL = 'https://n8n.srv781285.hstgr.cloud/webhook/quiz-resilience';
+const WEBHOOK_TOKEN = '275dd052f2327a3032aa85cd897e221740123ce57facb0e6e1ee39f5294abd39';
 
 const QUESTIONS = [
   { q: "Traitez-vous de l'information au quotidien ?", hint: "Veille, recherches, lecture de documents, collecte de données…", options: [{ text: "Jamais ou presque", score: 0 }, { text: "Parfois", score: 8 }, { text: "Souvent", score: 16 }, { text: "C'est le cœur de mon travail", score: 24 }] },
@@ -463,7 +464,7 @@ async function sendToWebhook() {
     const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ metier, secteur, experience, email, score_resilience: resilience, score_remplacabilite: pct, reponses_quiz: reponsesQuiz })
+      body: JSON.stringify({ metier, secteur, experience, email, score_resilience: resilience, score_remplacabilite: pct, reponses_quiz: reponsesQuiz, _token: WEBHOOK_TOKEN })
     });
     const data = await response.json();
     if (data.status === 'complet') {
@@ -506,7 +507,7 @@ async function sendWaitlist() {
     await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, waitlist: true })
+      body: JSON.stringify({ email, waitlist: true, _token: WEBHOOK_TOKEN })
     });
     document.getElementById('waitlistConfirm').style.display = 'block';
     btn.textContent = 'Enregistré ✓';
