@@ -109,17 +109,15 @@ select.cta-input option { background: #1C1C1C; color: var(--texte); }
 .source-footer { margin-top: 32px; font-family: 'DM Mono', monospace; font-size: 10px; color: #333; text-align: center; line-height: 1.8; }
 
 /* CONFIRMATION */
-#confirmation { flex-direction: column; align-items: center; justify-content: center; padding: 48px 40px; text-align: center; }
-.confirm-icon { font-size: 40px; margin-bottom: 20px; }
-.confirm-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 10px; }
-.confirm-sub { font-size: 14px; color: var(--texte-dim); max-width: 400px; line-height: 1.6; margin-bottom: 32px; }
-.confirm-score-block { background: #111; border: 1px solid #222; border-radius: 4px; padding: 20px 28px; max-width: 400px; width: 100%; margin-bottom: 12px; text-align: left; }
-.confirm-score-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.confirm-score-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; }
-.confirm-score-value { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; }
-.confirm-score-note { font-size: 12px; color: var(--texte-dim); line-height: 1.6; border-top: 1px solid #1C1C1C; padding-top: 10px; }
-.confirm-score-note strong { color: var(--texte); }
-.confirm-share { max-width: 400px; width: 100%; margin-top: 28px; }
+#confirmation { flex-direction: column; align-items: center; padding: 40px; max-width: 680px; margin: 0 auto; width: 100%; text-align: center; }
+.confirm-sent-banner { display: inline-flex; align-items: center; gap: 10px; background: #0A1A0A; border: 1px solid #1A3A1A; border-radius: 4px; padding: 12px 20px; margin-bottom: 32px; }
+.confirm-sent-icon { font-size: 16px; }
+.confirm-sent-text { font-family: 'DM Mono', monospace; font-size: 11px; color: #2ECC71; letter-spacing: 1px; }
+.confirm-sent-sub { font-size: 12px; color: var(--texte-dim); margin-top: 4px; }
+.confirm-precision-note { width: 100%; max-width: 480px; background: #111; border: 1px solid #1C1C1C; border-left: 3px solid var(--texte-dim); border-radius: 0 4px 4px 0; padding: 14px 18px; text-align: left; margin-bottom: 32px; }
+.confirm-precision-note p { font-size: 12px; color: var(--texte-dim); line-height: 1.7; }
+.confirm-precision-note strong { color: var(--texte); }
+.confirm-share { width: 100%; max-width: 480px; }
 .confirm-share-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
 
 /* COMPLET / WAITLIST */
@@ -274,20 +272,44 @@ select.cta-input option { background: #1C1C1C; color: var(--texte); }
 
 <!-- CONFIRMATION -->
 <div id="confirmation" class="screen">
-  <div class="confirm-icon">✉️</div>
-  <div class="confirm-title">Rapport en route !</div>
-  <p class="confirm-sub">Votre analyse personnalisée arrive dans votre boîte mail dans moins de 2 minutes. Pensez à vérifier vos spams.</p>
 
-  <div class="confirm-score-block">
-    <div class="confirm-score-top">
-      <span class="confirm-score-label">Votre score indicatif</span>
-      <span class="confirm-score-value" id="confirmScoreValue">—</span>
+  <!-- Bandeau "rapport en route" -->
+  <div class="confirm-sent-banner">
+    <span class="confirm-sent-icon">✉️</span>
+    <div>
+      <div class="confirm-sent-text">Rapport en route !</div>
+      <div class="confirm-sent-sub">Arrivée dans votre boîte mail dans moins de 2 minutes</div>
     </div>
-    <p class="confirm-score-note">
-      Le rapport que vous allez recevoir sera <strong>plus précis</strong> — il intègre votre métier, votre secteur et vos années d'expérience pour affiner cette analyse. Le score final peut donc différer de cette première estimation.
-    </p>
   </div>
 
+  <!-- Cercle score — identique à la page résultat -->
+  <div class="score-circle">
+    <svg viewBox="0 0 200 200">
+      <circle class="circle-bg" cx="100" cy="100" r="90"/>
+      <circle class="circle-fill" id="confirmCircleFill" cx="100" cy="100" r="90"/>
+    </svg>
+    <div class="score-number">
+      <span class="score-pct" id="confirmScorePct">—</span>
+      <span class="score-unit">remplaçabilité</span>
+    </div>
+  </div>
+
+  <!-- Titre + description exposition -->
+  <h2 class="score-title" id="confirmScoreTitle"></h2>
+  <p class="score-desc" id="confirmScoreDesc"></p>
+
+  <!-- Badge horizon -->
+  <div class="horizon-badge" style="margin-bottom: 28px;">
+    <span class="horizon-label">Horizon estimé</span>
+    <span class="horizon-value" id="confirmHorizonValue"></span>
+  </div>
+
+  <!-- Note précision -->
+  <div class="confirm-precision-note">
+    <p>Ce score est une <strong>première estimation</strong>. Le rapport que vous allez recevoir sera plus précis — il intègre votre métier, votre secteur et vos années d'expérience. Le score final peut donc légèrement différer.</p>
+  </div>
+
+  <!-- Boutons de partage -->
   <div class="confirm-share">
     <div class="confirm-share-title">Partager le test</div>
     <div class="share-buttons">
@@ -297,6 +319,7 @@ select.cta-input option { background: #1C1C1C; color: var(--texte); }
       <button class="share-btn btn-copy" onclick="copyLink()">Copier le lien</button>
     </div>
   </div>
+
 </div>
 
 <!-- COMPLET / WAITLIST -->
@@ -446,11 +469,23 @@ async function sendToWebhook() {
     if (data.status === 'complet') {
       showScreen('complet');
     } else if (data.success) {
-      // Afficher le score sur la page de confirmation
-      const confirmScore = document.getElementById('confirmScoreValue');
-      if (confirmScore && window._quizResult) {
-        confirmScore.textContent = window._quizResult.pct + '%';
-        confirmScore.style.color = window._quizResult.color;
+      // Peupler la page de confirmation avec les données du résultat
+      if (window._quizResult) {
+        const r = window._quizResult;
+        // Cercle
+        document.getElementById('confirmCircleFill').style.stroke = r.color;
+        setTimeout(() => {
+          const offset = 565 - (r.pct / 100) * 565;
+          document.getElementById('confirmCircleFill').style.strokeDashoffset = offset;
+        }, 100);
+        // Score
+        document.getElementById('confirmScorePct').textContent = r.pct + '%';
+        document.getElementById('confirmScorePct').style.color = r.color;
+        // Titre + description + horizon
+        document.getElementById('confirmScoreTitle').textContent = document.getElementById('scoreTitle').textContent;
+        document.getElementById('confirmScoreDesc').textContent = document.getElementById('scoreDesc').textContent;
+        document.getElementById('confirmHorizonValue').textContent = document.getElementById('horizonValue').textContent;
+        document.getElementById('confirmHorizonValue').style.color = r.color;
       }
       showScreen('confirmation');
     } else {
