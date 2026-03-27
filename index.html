@@ -109,10 +109,18 @@ select.cta-input option { background: #1C1C1C; color: var(--texte); }
 .source-footer { margin-top: 32px; font-family: 'DM Mono', monospace; font-size: 10px; color: #333; text-align: center; line-height: 1.8; }
 
 /* CONFIRMATION */
-#confirmation { flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; }
-.confirm-icon { font-size: 48px; margin-bottom: 24px; }
-.confirm-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 12px; }
-.confirm-sub { font-size: 15px; color: var(--texte-dim); max-width: 400px; line-height: 1.6; }
+#confirmation { flex-direction: column; align-items: center; justify-content: center; padding: 48px 40px; text-align: center; }
+.confirm-icon { font-size: 40px; margin-bottom: 20px; }
+.confirm-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+.confirm-sub { font-size: 14px; color: var(--texte-dim); max-width: 400px; line-height: 1.6; margin-bottom: 32px; }
+.confirm-score-block { background: #111; border: 1px solid #222; border-radius: 4px; padding: 20px 28px; max-width: 400px; width: 100%; margin-bottom: 12px; text-align: left; }
+.confirm-score-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.confirm-score-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; }
+.confirm-score-value { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; }
+.confirm-score-note { font-size: 12px; color: var(--texte-dim); line-height: 1.6; border-top: 1px solid #1C1C1C; padding-top: 10px; }
+.confirm-score-note strong { color: var(--texte); }
+.confirm-share { max-width: 400px; width: 100%; margin-top: 28px; }
+.confirm-share-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--texte-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
 
 /* COMPLET / WAITLIST */
 #complet { flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; }
@@ -268,7 +276,27 @@ select.cta-input option { background: #1C1C1C; color: var(--texte); }
 <div id="confirmation" class="screen">
   <div class="confirm-icon">✉️</div>
   <div class="confirm-title">Rapport en route !</div>
-  <p class="confirm-sub">Votre analyse personnalisée arrive dans votre boîte mail dans moins de 2 minutes.<br><br>Pensez à vérifier vos spams si vous ne le voyez pas.</p>
+  <p class="confirm-sub">Votre analyse personnalisée arrive dans votre boîte mail dans moins de 2 minutes. Pensez à vérifier vos spams.</p>
+
+  <div class="confirm-score-block">
+    <div class="confirm-score-top">
+      <span class="confirm-score-label">Votre score indicatif</span>
+      <span class="confirm-score-value" id="confirmScoreValue">—</span>
+    </div>
+    <p class="confirm-score-note">
+      Le rapport que vous allez recevoir sera <strong>plus précis</strong> — il intègre votre métier, votre secteur et vos années d'expérience pour affiner cette analyse. Le score final peut donc différer de cette première estimation.
+    </p>
+  </div>
+
+  <div class="confirm-share">
+    <div class="confirm-share-title">Partager le test</div>
+    <div class="share-buttons">
+      <button class="share-btn btn-linkedin" onclick="shareLinkedIn()">LinkedIn</button>
+      <button class="share-btn btn-x" onclick="shareX()">X / Twitter</button>
+      <button class="share-btn btn-whatsapp" onclick="shareWhatsApp()">WhatsApp</button>
+      <button class="share-btn btn-copy" onclick="copyLink()">Copier le lien</button>
+    </div>
+  </div>
 </div>
 
 <!-- COMPLET / WAITLIST -->
@@ -418,6 +446,12 @@ async function sendToWebhook() {
     if (data.status === 'complet') {
       showScreen('complet');
     } else if (data.success) {
+      // Afficher le score sur la page de confirmation
+      const confirmScore = document.getElementById('confirmScoreValue');
+      if (confirmScore && window._quizResult) {
+        confirmScore.textContent = window._quizResult.pct + '%';
+        confirmScore.style.color = window._quizResult.color;
+      }
       showScreen('confirmation');
     } else {
       throw new Error('Erreur inattendue');
